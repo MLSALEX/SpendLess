@@ -40,7 +40,11 @@ fun CategoryCard(
     ) {
         CategoryIcon(category, isIncome, iconSize)
         Column(Modifier.weight(1f)) {
-            CategoryName(category.name, MaterialTheme.typography.labelMedium)
+            CategoryName(
+                category.name,
+                MaterialTheme.typography.labelMedium,
+                MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }
@@ -49,19 +53,21 @@ fun CategoryCard(
 fun CategoryIcon(
     item:CategoryItem,
     isIncome: Boolean,
-    size: Dp = 44.dp
+    backgroundSize: Dp = 44.dp,
+    iconSize: Dp = 20.dp
 ) {
+
     Box(
         Modifier
             .clip(RoundedCornerShape(12.dp))
             .background(ExpenseIncomeColors.categoryIconBackground(isIncome))
-            .size(size),
+            .size(backgroundSize),
         contentAlignment = Alignment.Center
     ){
         Icon(
             painter = painterResource(item.icon),
             contentDescription = item.name,
-            modifier = Modifier.size(20.dp),
+            modifier = Modifier.size(iconSize),
             tint = Color.Unspecified
         )
     }
@@ -70,12 +76,13 @@ fun CategoryIcon(
 @Composable
 fun CategoryName(
     name: String,
-    textStyle: TextStyle = MaterialTheme.typography.labelLarge
+    textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
+    color: Color = MaterialTheme.colorScheme.onSurface
 ) {
     Text(
         text = name,
         style = textStyle,
-        color = MaterialTheme.colorScheme.onSurface
+        color = color
     )
 }
 

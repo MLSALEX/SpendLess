@@ -17,21 +17,25 @@ import com.spendless.app.ui.theme.AppIconButtonColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(modifier: Modifier = Modifier) {
+fun TopBar(
+    name: String,
+    onSettingsClick: () -> Unit,
+    onExportClick: () -> Unit
+) {
     TopAppBar(
-        title = { Text("UserName", color = MaterialTheme.colorScheme.onPrimary) },
+        title = { Text(name, color = MaterialTheme.colorScheme.onPrimary) },
         actions = {
-            Row (modifier = modifier.padding(end = 14.dp),
+            Row (modifier = Modifier.padding(end = 14.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)){
                 IconButtonVariant(
                     contentDescription = "OnPrimary",
-                    onClick = {  },
+                    onClick = { onExportClick() },
                     colors = AppIconButtonColors.OnPrimary,
                     iconResId = R.drawable.download
                 )
                 IconButtonVariant(
                     contentDescription = "OnPrimary",
-                    onClick = {  },
+                    onClick = { onSettingsClick() },
                     colors = AppIconButtonColors.OnPrimary
                 )
             }
