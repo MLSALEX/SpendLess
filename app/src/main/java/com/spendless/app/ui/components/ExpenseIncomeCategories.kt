@@ -82,7 +82,7 @@ fun ExpenseIncomeCategory(
                         .padding(end = 2.dp, bottom = 2.dp),
                     contentAlignment = Alignment.Center
                 ) {
-                    CategoryIcon(item.category, item.isIncome, size = 44.dp)
+                    CategoryIcon(item.category, item.isIncome, backgroundSize = 44.dp)
                     if (!item.description.isNullOrEmpty()) {
                         Box(
                             modifier = Modifier

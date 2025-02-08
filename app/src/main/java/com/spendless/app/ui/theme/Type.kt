@@ -37,8 +37,8 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = figtreeFont,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 20.sp,
-        lineHeight = 26.sp
+        fontSize = 18.sp, // must be 20
+        lineHeight = 24.sp
     ),
     titleMedium = TextStyle(
         fontFamily = figtreeFont,
@@ -76,10 +76,10 @@ val Typography = Typography(
         fontSize = 14.sp,
         lineHeight = 20.sp
     ),
-//    bodyXSmall = TextStyle(
-//        fontFamily = figtreeFont,
-//        fontWeight = FontWeight.Normal,
-//        fontSize = 12.sp,
-//        lineHeight = 16.sp
-//    )
+    bodyLarge = TextStyle(  //bodyXSmall
+        fontFamily = figtreeFont,
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp,
+        lineHeight = 16.sp
+    )
 )

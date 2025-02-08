@@ -30,7 +30,7 @@ fun SegmentedButton(
         modifier = Modifier
             .clip(RoundedCornerShape(16.dp))
             .background(AppColors.PrimaryContainerOpacity08)
-            .padding(horizontal = 4.dp)
+            .padding(4.dp)
     ) {
         options.forEachIndexed { index, option ->
             Button(
