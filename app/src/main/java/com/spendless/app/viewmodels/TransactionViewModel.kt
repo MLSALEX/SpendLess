@@ -10,6 +10,7 @@ import com.spendless.app.ui.components.CategoryItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -36,11 +37,18 @@ class TransactionViewModel @Inject constructor(
     private val _note = MutableStateFlow("")
     val note = _note.asStateFlow()
 
-    private val _repeatFrequency = MutableStateFlow(RepeatFrequency.DOES_NOT_REPEAT)
-    val repeatFrequency = _repeatFrequency.asStateFlow()
 
     private val _selectedCategory = MutableStateFlow<CategoryItem?>(null)
     val selectedExpenseCategory = _selectedCategory.asStateFlow()
+
+    private val _repeatFrequency = MutableStateFlow(RepeatFrequency.DOES_NOT_REPEAT)
+    val repeatFrequency: StateFlow<RepeatFrequency> = _repeatFrequency.asStateFlow()
+
+    val repeatOptions: List<RepeatFrequency> = RepeatFrequency.entries
+
+    fun updateRepeatFrequency(newFrequency: RepeatFrequency) {
+        _repeatFrequency.value = newFrequency
+    }
 
     val currentTransactionType = selectedTypeIndex.map {
         TransactionType.values()[it]
@@ -68,9 +76,6 @@ class TransactionViewModel @Inject constructor(
         _note.value = newNote.take(100)
     }
 
-    fun updateRepeatFrequency(frequency: RepeatFrequency) {
-        _repeatFrequency.value = frequency
-    }
 
     fun updateSelectedCategory(category: CategoryItem) {
         _selectedCategory.value = category

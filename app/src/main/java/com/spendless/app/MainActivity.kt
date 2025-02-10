@@ -70,15 +70,7 @@ fun TestScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(15.dp))
 //        SelectList()
 
-        var selectedCategory by remember { mutableStateOf(categories.first()) }
 
-        Column(modifier = Modifier.padding(16.dp)) {
-            SelectDropdown(
-                categories = categories,
-                selectedCategory = selectedCategory,
-                onCategorySelected = { selectedCategory = it } // Обновляем выбранную категорию
-            )
-        }
 //        IconButtonDemo()
 
     }

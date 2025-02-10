@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
@@ -14,19 +13,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.spendless.app.TransactionType
-import com.spendless.app.ui.components.CategoryItem
+import com.spendless.app.ui.components.CategoryCard
 import com.spendless.app.ui.components.SegmentedButton
 import com.spendless.app.ui.components.SelectDropdown
 import com.spendless.app.ui.components.categories
 import com.spendless.app.viewmodels.TransactionViewModel
-import com.spendless.app.ui.screens.components.AmountInput
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,6 +40,7 @@ fun TransactionSheet(
     val repeatFrequency by viewModel.repeatFrequency.collectAsState()
     val isCreateEnabled by viewModel.isCreateEnabled.collectAsState()
     val selectedCategory by viewModel.selectedExpenseCategory.collectAsState()
+
 
     val scope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -90,19 +88,34 @@ fun TransactionSheet(
 //                textStyle = TextStyle(textAlign = TextAlign.Center)
 //            )
 
+//            if (currentTransactionType == TransactionType.EXPENSE) {
+//                SelectDropdown(
+//                    categories = categories,
+//                    selectedCategory = selectedCategory ?: categories.first(),
+//                    onCategorySelected = { viewModel.updateSelectedCategory(it) }
+//                )
+//            }
+
             if (currentTransactionType == TransactionType.EXPENSE) {
                 SelectDropdown(
-                    categories = categories,
-                    selectedCategory = selectedCategory ?: categories.first(),
-                    onCategorySelected = { viewModel.updateSelectedCategory(it) }
+                    items = categories,
+                    selectedItem = selectedCategory ?: categories.first(),
+                    onItemSelected = { viewModel.updateSelectedCategory(it) }
+                ) { category ->
+                    CategoryCard(category, isIncome = false, iconSize = 40.dp)
+                }
+            }
+
+            SelectDropdown(
+                items = viewModel.repeatOptions,
+                selectedItem = repeatFrequency,
+                onItemSelected = { viewModel.updateRepeatFrequency(it) }
+            ) { repeatOption ->
+                Text(
+                    text = repeatOption.toDisplayString(),
+                    modifier = Modifier.padding(12.dp)
                 )
             }
-//            // Repeat Frequency Dropdown
-//            RepeatFrequencyDropdown(
-//                selected = repeatFrequency,
-//                onFrequencySelected = { viewModel.updateRepeatFrequency(it) }
-//            )
-
             // Create Button
             Button(
                 onClick = {

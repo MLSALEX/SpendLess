@@ -39,13 +39,13 @@ import com.spendless.app.R
 import com.spendless.app.ui.theme.AppColors
 
 @Composable
-fun SelectDropdown(
-    categories: List<CategoryItem>,
-    selectedCategory: CategoryItem,
-    onCategorySelected: (CategoryItem) -> Unit
+fun <T> SelectDropdown(
+    items: List<T>,
+    selectedItem: T,
+    onItemSelected: (T) -> Unit,
+    itemContent: @Composable (T) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val iconSize = 40.dp
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Box(
@@ -65,7 +65,7 @@ fun SelectDropdown(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.weight(1f)
                 ) {
-                    CategoryCard(selectedCategory, isIncome = false, iconSize)
+                    itemContent(selectedItem)
                 }
                 Icon(
                     painter = if (expanded) painterResource(R.drawable.arrow_drop_up) else painterResource(R.drawable.arrow_drop_down),
@@ -82,12 +82,13 @@ fun SelectDropdown(
             exit = shrinkVertically() + fadeOut()
         ) {
             SelectList(
-                categories = categories,
-                selectedCategory = selectedCategory,
-                onCategorySelected = {
-                    onCategorySelected(it)
+                items = items,
+                selectedItem = selectedItem,
+                onItemSelected = {
+                    onItemSelected(it)
                     expanded = false
                 },
+                itemContent = itemContent,
                 modifier = Modifier.padding(top = 8.dp)
             )
         }
@@ -95,10 +96,11 @@ fun SelectDropdown(
 }
 
 @Composable
-fun SelectList(
-    categories: List<CategoryItem>,
-    selectedCategory: CategoryItem,
-    onCategorySelected: (CategoryItem) -> Unit,
+fun <T> SelectList(
+    items: List<T>,
+    selectedItem: T,
+    onItemSelected: (T) -> Unit,
+    itemContent: @Composable (T) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Box(
@@ -107,15 +109,15 @@ fun SelectList(
             .height(240.dp)
             .shadow(8.dp, shape = RoundedCornerShape(16.dp))
             .clip(RoundedCornerShape(16.dp))
-            .background(AppColors.SurfContainerLowest)
+            .background(MaterialTheme.colorScheme.surfaceContainerLowest)
     ) {
         LazyColumn {
-            items(categories) { category ->
+            items(items) { item ->
                 SelectableItem(
-                    isSelected = category == selectedCategory,
-                    onSelect = { onCategorySelected(category) }
+                    isSelected = item == selectedItem,
+                    onSelect = { onItemSelected(item) }
                 ) {
-                    CategoryCard(category, isIncome = false, iconSize = 40.dp)
+                    itemContent(item)
                 }
             }
         }
