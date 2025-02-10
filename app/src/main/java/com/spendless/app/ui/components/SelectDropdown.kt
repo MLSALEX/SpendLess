@@ -33,7 +33,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.spendless.app.R
 import com.spendless.app.ui.theme.AppColors
 
 @Composable
@@ -66,7 +68,7 @@ fun SelectDropdown(
                     CategoryCard(selectedCategory, isIncome = false, iconSize)
                 }
                 Icon(
-                    imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.ArrowDropDown,
+                    painter = if (expanded) painterResource(R.drawable.arrow_drop_up) else painterResource(R.drawable.arrow_drop_down),
                     contentDescription = "Expand",
                     tint = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(end = 12.dp)

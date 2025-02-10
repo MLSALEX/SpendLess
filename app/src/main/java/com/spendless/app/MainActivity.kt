@@ -24,6 +24,8 @@ import com.spendless.app.ui.components.CategoryItem
 import com.spendless.app.ui.components.ExpenseIncomeItem
 import com.spendless.app.ui.components.IconButtonDemo
 import com.spendless.app.ui.components.SegmentedButton
+import com.spendless.app.ui.components.SelectDropdown
+import com.spendless.app.ui.components.SelectList
 import com.spendless.app.ui.components.categories
 import com.spendless.app.ui.screens.Dashboard
 import com.spendless.app.ui.theme.AppColors
@@ -57,27 +59,27 @@ fun TestScreen(modifier: Modifier = Modifier) {
         val sampleCategory = CategoryItem("Food & Groceries", R.drawable.food, AppColors.PrimaryFixed)
         CategoryCard(sampleCategory, isIncome = true, 40.dp)
         Spacer(modifier = Modifier.height(15.dp))
-        var selectedIndex by remember { mutableStateOf(0) }
-
-        SegmentedButton(
-            options = listOf("Label", "Label", "Label"),
-            selectedIndex = selectedIndex,
-            onOptionSelected = { selectedIndex = it }
-        )
+//        var selectedIndex by remember { mutableStateOf(0) }
+//
+//        SegmentedButton(
+//            options = listOf("Label", "Label", "Label"),
+//            selectedIndex = selectedIndex,
+//            onOptionSelected = { selectedIndex = it }
+//        )
 //          ExpenseIncomeList(items = expenseItems)
         Spacer(modifier = Modifier.height(15.dp))
 //        SelectList()
 
-//        var selectedCategory by remember { mutableStateOf(categories.first()) }
-//
-//        Column(modifier = Modifier.padding(16.dp)) {
-//            SelectDropdown(
-//                categories = categories,
-//                selectedCategory = selectedCategory,
-//                onCategorySelected = { selectedCategory = it } // Обновляем выбранную категорию
-//            )
-//        }
-        IconButtonDemo()
+        var selectedCategory by remember { mutableStateOf(categories.first()) }
+
+        Column(modifier = Modifier.padding(16.dp)) {
+            SelectDropdown(
+                categories = categories,
+                selectedCategory = selectedCategory,
+                onCategorySelected = { selectedCategory = it } // Обновляем выбранную категорию
+            )
+        }
+//        IconButtonDemo()
 
     }
 }

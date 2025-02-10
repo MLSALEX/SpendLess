@@ -34,6 +34,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.spendless.app.R
 import com.spendless.app.expenseItems
 import com.spendless.app.ui.components.AddButton
@@ -45,12 +46,14 @@ import com.spendless.app.ui.components.ExpenseIncomeList
 import com.spendless.app.ui.components.TopBar
 import com.spendless.app.ui.theme.AppColors
 import com.spendless.app.ui.theme.GradientScheme
+import com.spendless.app.viewmodels.TransactionViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Dashboard(
 //    viewModel: DashboardViewModel = hiltViewModel(),
+    viewModel: TransactionViewModel = hiltViewModel()
 //    onSettingsClick: () -> Unit,
 //    onExportClick: () -> Unit,
 //    onShowAllClick: () -> Unit
@@ -69,6 +72,8 @@ fun Dashboard(
     val category = CategoryItem("Food & Groceries", R.drawable.food, AppColors.PrimaryFixed)
     val isIncome = false
 
+    var showSheet by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -81,7 +86,7 @@ fun Dashboard(
             },
             floatingActionButton = {
                 AddButton(
-                    onClick = {  },
+                    onClick = { showSheet = true  },
                     icon = Icons.Default.Add,
                     contentDescription = "Add entry",
                     modifier = Modifier.padding(8.dp)
@@ -108,6 +113,12 @@ fun Dashboard(
                     )
                 }
             }
+        )
+    }
+    if (showSheet) {
+        TransactionSheet(
+            onDismiss = { showSheet = false },
+            viewModel = viewModel
         )
     }
 }
